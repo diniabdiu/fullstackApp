@@ -61,22 +61,19 @@ app.post('/api/notes', (req,res) => {
   })
  
 })
+app.put('/api/notes/:id', (request, response, next) => {
+  const body = request.body
 
-app.put('/api/notes/:id', (req, res) => {
+  const note = {
+    content: body.content,
+    important: body.important,
+  }
 
-  // get info from body request
-  const body = req.body
-  // find id from params and convert to number for sure!
-  const id = Number(req.params.id)
-
-  Note.findByIdAndUpdate(id, body).then(noteUpdate => {
-    res.json(noteUpdate).end()
-  })
-
-  // const noteIndex = notes.findIndex(n => n.id === id)
-
-  // notes[noteIndex] = body
-  // res.json(notes[noteIndex]).end()
+  Note.findByIdAndUpdate(request.params.id, note, { new: true })
+    .then(updatedNote => {
+      response.json(updatedNote).end()
+    })
+    .catch(error => next(error))
 })
 const PORT = process.env.PORT
 app.listen(PORT, () => {
