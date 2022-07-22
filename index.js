@@ -19,7 +19,7 @@ app.get('/', (request, response) => {
 
 app.get('/api/notes', (request, response) => {
   Note.find({}).then(notes => {
-    response.json(notes).end()
+    response.json(notes)
   })
 })
 
@@ -30,8 +30,6 @@ app.get('/api/notes/:id', (req, res) => {
     res.json(note).end()
   })  
 })
-
-
 
 app.delete('/api/notes/:id', (req, res) => {
   const id = req.params.id
@@ -70,9 +68,11 @@ app.put('/api/notes/:id', (req, res) => {
   const body = req.body
   // find id from params and convert to number for sure!
   const id = Number(req.params.id)
+
   Note.findByIdAndUpdate(id, body).then(noteUpdate => {
     res.json(noteUpdate).end()
   })
+
   // const noteIndex = notes.findIndex(n => n.id === id)
 
   // notes[noteIndex] = body

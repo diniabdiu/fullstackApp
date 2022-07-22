@@ -1,6 +1,6 @@
 require('dotenv').config()
 const mongoose = require('mongoose')
-const password = 'kolkol'
+
 const url = process.env.MONGODB_URI
 
 mongoose.connect(url).then(result => {
